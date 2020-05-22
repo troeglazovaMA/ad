@@ -50,7 +50,7 @@ $values=[];
 foreach ($users_data as $row){
     $fio = strip_tags($row['fio']);
     $email = strip_tags($row['email']);
-    $bday = date("Y-m-d",intval($row['bday']));
+    $day = date("Y-m-d",intval($row['day']));
     $pol= $row['pol'] == 'male'? 'муж.': 'жен.';
     $lim=(int)$row['lim'];
     $abilites=[];
