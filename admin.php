@@ -19,7 +19,7 @@ if (empty($_SERVER['PHP_AUTH_USER']) ||
     $pass = '5245721';
     $db = new PDO('mysql:host=localhost;dbname=u20397', $user, $pass, array(PDO::ATTR_PERSISTENT => true));   
     try {
-        $stmt = $db->prepare("SELECT * FROM atable WHERE adlog=? AND adpass=md5(?)");
+        $stmt = $db->prepare("SELECT * FROM atable WHERE alog=? AND apar=md5(?)");
         $stmt->execute(array($_SERVER['PHP_AUTH_USER'],$_SERVER['PHP_AUTH_PW']));
     }
     catch(PDOException $e){
@@ -38,7 +38,7 @@ $pass = '5245721';
 $db = new PDO('mysql:host=localhost;dbname=u20397', $user, $pass, array(PDO::ATTR_PERSISTENT => true));
 
 try {
-    $stmt = $db->prepare("SELECT * FROM Autouser");
+    $stmt = $db->prepare("SELECT * FROM utable");
     $stmt->execute();
 }
 catch(PDOException $e){
@@ -51,13 +51,13 @@ foreach ($users_data as $row){
     $fio = strip_tags($row['fio']);
     $email = strip_tags($row['email']);
     $bday = date("Y-m-d",intval($row['bday']));
-    $sex= $row['sex'] == 'MAN'? 'муж.': 'жен.';
+    $pol= $row['pol'] == 'male'? 'муж.': 'жен.';
     $lim=(int)$row['lim'];
     $abilites=[];
     if(!empty($row['god'])){
         $abilites[]='Бессмертие';
     }
-    if(!empty($row['twalk'])){
+    if(!empty($row['sten'])){
         $abilites[]='Прохождение сквозь стены';
     }
     if(!empty($row['fly'])){
@@ -71,8 +71,8 @@ foreach ($users_data as $row){
     $values[$row['id']]= [
         $fio,
         $email,
-        $bday,
-        $sex,
+        $day,
+        $pol,
         $lim,
         $abilites,
         $bio,
@@ -82,7 +82,7 @@ foreach ($users_data as $row){
 
 print('Добро пожаловать в управление системой.');
 $values_lables=['Имя','Email','Дата рождения','Пол','Количество конечностей','Способности','Биография','Ознакомлен с контрактом','Удалить'];
-include 'table.php';
+include 'upr.php';
 print('<br>');
 
 }
@@ -92,9 +92,9 @@ else {
     $db = new PDO('mysql:host=localhost;dbname=u20397', $user, $pass, array(PDO::ATTR_PERSISTENT => true));
     // Подготовленный запрос. Не именованные метки.
     try {
-        $params=array($_POST['todelete']);
+        $parametr=array($_POST['todelete']);
         $stmt = $db->prepare("DELETE FROM utable WHERE id = ?");
-        $stmt->execute($params);
+        $stmt->execute($parametr);
     }
     catch(PDOException $e){
         print('Error : ' . $e->getMessage());
