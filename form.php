@@ -18,19 +18,15 @@
       }
     </style>
     <meta charset="utf-8">
-    <meta name="generator" content="GitLab Pages">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="style.css">
-    <title>Exercice 4</title>
+    <title>Mypage</title>
   </head>
   <body>
     <header>
       <div class="container-fluid justify-content-center p-0">
         <div class="row align-items-center px-0 justify-content-md-center color1 ">
-          <div class="col-2 pl-md-0 ml-md-n4 ">
-            <img src="https://flink.apache.org/img/logo/png/500/flink_squirrel_500.png" alt="logo" id="logo">
-          </div>
           <div class="col-auto ml-5 ml-md-0  text-center">
             <h1>Форма</h1>
           </div>
@@ -55,12 +51,12 @@
             <h2>Форма</h2>
             <?php  if(empty($_SESSION['login'])) print('
             <a href="login.php">
-   			<button type="button" class="btn btn-primary" >Авторизация</button>
+   			<button type="button" class="btn btn-primary" >Вход</button>
   			</a>');
   			?>
   			<?php  if(empty($_SESSION['login'])) print('
             <a href="admin.php">
-   			<button type="button" class="btn btn-secondary" >Администрирование</button>
+   			<button type="button" class="btn btn-secondary" >Управление</button>
   			</a>');
   			?>
             <form action="index.php" method="POST">
@@ -79,18 +75,18 @@
               <label>
               Дата рождения
               <br>
-              <input name="bday" <?php if ($errors['bday']) {print 'class="error"';} ?> value="<?php print $values['bday']; ?>" type="date">
+              <input name="day" <?php if ($errors['day']) {print 'class="error"';} ?> value="<?php print $values['day']; ?>" type="date">
               </label>
               <br>
               <p>
                 Пол
               </p>
               <br>
-              <label <?php if ($errors['sex']) {print 'class="error1"';} ?>>
-              <input type="radio" <?php if($values['sex'] == "MAN") {print 'checked="checked"';}?> name="sex" value="MAN"> М
+              <label <?php if ($errors['pol']) {print 'class="error1"';} ?>>
+              <input type="radio" <?php if($values['pol'] == "male") {print 'checked="checked"';}?> name="pol" value="male"> М
               </label>
-              <label <?php if ($errors['sex']) {print 'class="error1"';} ?>>
-              <input type="radio" <?php if($values['sex'] == "WOM") {print 'checked="checked"';}?> name="sex" value="WOM"> Ж
+              <label <?php if ($errors['pol']) {print 'class="error1"';} ?>>
+              <input type="radio" <?php if($values['pol'] == "fem") {print 'checked="checked"';}?> name="pol" value="fem"> Ж
               </label>
               <br>
               <p>
@@ -118,7 +114,7 @@
                 <br>
                 <select name="abilities[]" multiple="multiple" <?php if ($errors['abil']) {print 'class="error"';} ?>>
                   <option  <?php if($values['god'] == "1") {print 'selected="selected"';}?> value="god">Бессмертие</option>
-                  <option  <?php if($values['twalk'] == "1") {print 'selected="selected"';}?>value="twalk">Прохождение сквозь стены</option>
+                  <option  <?php if($values['sten'] == "1") {print 'selected="selected"';}?>value="sten">Прохождение сквозь стены</option>
                   <option  <?php if($values['fly'] == "1") {print 'selected="selected"';}?>value="fly">Левитация</option>
                 </select>
               </label>
@@ -133,7 +129,7 @@
               <input type="checkbox" <?php if($values['yes'] == "1") {print 'checked="checked"';}?> name="yess" value="1"> С контрактом ознакомлен
               </label>
               <br>
-              <button class="btn btn-success">Отправить</button>
+              <button class="btn btn-success">Отправить?</button>
             </form>
           </div>
           <div class="col-0 col-md-1">
