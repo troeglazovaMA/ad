@@ -47,12 +47,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 // Иначе, если запрос был методом POST, т.е. нужно сделать авторизацию с записью логина в сессию.
 else {
     
-    $user = 'u20362';
-    $pass = '5800777';
+    $user = 'u20397';
+    $pass = '5245721';
     $db = new PDO('mysql:host=localhost;dbname=u20362', $user, $pass, array(PDO::ATTR_PERSISTENT => true));
   // Подготовленный запрос. Не именованные метки.
   try {
-    $stmt = $db->prepare("SELECT id FROM Autouser WHERE login = ? AND password = md5(?)");
+    $stmt = $db->prepare("SELECT id FROM utable WHERE login = ? AND password = md5(?)");
     $stmt->execute(array($_POST['login'], $_POST['pass']));
   }
   catch(PDOException $e){
