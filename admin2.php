@@ -20,7 +20,7 @@ if (empty($_SERVER['PHP_AUTH_USER']) ||
     $pass = '5245721';
     $db = new PDO('mysql:host=localhost;dbname=u20397', $user, $pass, array(PDO::ATTR_PERSISTENT => true));   
     try {
-        $stmt = $db->prepare("SELECT * FROM Admin WHERE alog=? AND apar=md5(?)");
+        $stmt = $db->prepare("SELECT * FROM atable WHERE alog=? AND apar=md5(?)");
         $stmt->execute(array($_SERVER['PHP_AUTH_USER'],$_SERVER['PHP_AUTH_PW']));
     }
     catch(PDOException $e){
@@ -51,8 +51,8 @@ $values=[];
 foreach ($users_data as $row){
     $fio = strip_tags($row['fio']);
     $email = strip_tags($row['email']);
-    $bday = date("Y-m-d",intval($row['day']));
-    $sex= $row['pol'] == 'male'? 'муж.': 'жен.';
+    $day = date("Y-m-d",intval($row['day']));
+    $pol= $row['pol'] == 'male'? 'муж.': 'жен.';
     $lim=(int)$row['lim'];
     $abilites=[];
     if(!empty($row['god'])){
