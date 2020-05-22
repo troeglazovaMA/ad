@@ -312,9 +312,9 @@ else {
           
           $pass=substr(md5(uniqid()),0,8);
           try {
-              $params=array($pass);
+              $parametr=array($pass);
               $stmt = $db->prepare("INSERT INTO Autouser SET password = md5(?)");
-              $stmt -> execute($params);
+              $stmt -> execute($parametr);
           }
           catch(PDOException $e){
               print('Error : ' . $e->getMessage());
@@ -324,9 +324,9 @@ else {
           $login = 'user'.$current_id;
           // Сохраняем в Cookies.
           try {
-              $params=array($login,$current_id);
+              $parametr=array($login,$current_id);
               $stmt = $db->prepare("UPDATE Autouser SET login = ? WHERE id = ?");
-              $stmt -> execute($params);
+              $stmt -> execute($parametr);
           }
           catch(PDOException $e){
               print('Error : ' . $e->getMessage());
@@ -336,9 +336,9 @@ else {
           try {
               $_POST['bday']=strtotime($_POST['bday']);
               if($_POST['yess'] == 2) $_POST['yess'] = 0;
-              $params=array($_POST['fio'],$_POST['email'],$_POST['bday'],$_POST['sex'],$_POST['lim'],$ability_insert['god'],$ability_insert['twalk'],$ability_insert['fly'],$_POST['bio'],$_POST['yess'],$current_id);
+              $parametr=array($_POST['fio'],$_POST['email'],$_POST['bday'],$_POST['sex'],$_POST['lim'],$ability_insert['god'],$ability_insert['twalk'],$ability_insert['fly'],$_POST['bio'],$_POST['yess'],$current_id);
               $stmt = $db->prepare("UPDATE Autouser SET fio = ?,email = ?,bday = ?,sex = ?,lim = ?,god = ?,twalk = ?,fly = ?,bio = ?,yess = ?  WHERE id = ?");
-              $stmt->execute($params);
+              $stmt->execute($parametr);
           }
           
           catch(PDOException $e){
