@@ -135,14 +135,6 @@
           <div class="col-0 col-md-1">
           </div>
         </div>
-    <footer>
-      <div class="row color3 mt-2">
-        <div class="col-12 ">
-          <h2>
-            (c)Матвей Скирда
-          </h2>
-        </div>
-      </div>
-    </footer>
+
   </body>
 </html>
