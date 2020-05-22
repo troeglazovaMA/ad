@@ -296,9 +296,9 @@ else {
           try {
               $_POST['bday']=strtotime($_POST['bday']);
               if($_POST['yess'] == 2) $_POST['yess'] = 0;
-              $params=array($_POST['fio'],$_POST['email'],$_POST['bday'],$_POST['sex'],$_POST['lim'],$ability_insert['god'],$ability_insert['twalk'],$ability_insert['fly'],$_POST['bio'],$_POST['yess'],$_SESSION['uid']);
+              $parametr=array($_POST['fio'],$_POST['email'],$_POST['bday'],$_POST['sex'],$_POST['lim'],$ability_insert['god'],$ability_insert['twalk'],$ability_insert['fly'],$_POST['bio'],$_POST['yess'],$_SESSION['uid']);
               $stmt = $db->prepare("UPDATE Autouser SET fio = ?,email = ?,bday = ?,sex = ?,lim = ?,god = ?,twalk = ?,fly = ?,bio = ?,yess = ?  WHERE id = ?");
-              $stmt->execute($params);
+              $stmt->execute($parametr);
           }
           catch(PDOException $e){
               print('Error : ' . $e->getMessage());
