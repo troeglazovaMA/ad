@@ -80,7 +80,7 @@ foreach ($users_data as $row){
         $yes   
     ];
 }
-print('Вы успешно авторизовались и видите защищенные паролем данные.');
+print('panel is acktive');
 $values_lables=['Имя','Email','Дата рождения','Пол','Количество конечностей','Способности','Биография','Ознакомлен с контрактом','Удалить'];
 include 'upr.php';
 print('<br>');
@@ -90,7 +90,7 @@ else {
     $user = 'u20397';
     $pass = '5245721';
     $db = new PDO('mysql:host=localhost;dbname=u20397', $user, $pass, array(PDO::ATTR_PERSISTENT => true));
-    // Подготовленный запрос. Не именованные метки.
+   
     try {
         $parametr=array($_POST['todel']);
         $stmt = $db->prepare("DELETE FROM utable WHERE id = ?");
