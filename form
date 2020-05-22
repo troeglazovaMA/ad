@@ -84,7 +84,7 @@
               <label <?php if ($errors['pol']) {print 'class="error1"';} ?>>
               <input type="radio" <?php if($values['pol'] == "male") {print 'checked="checked"';}?> name="pol" value="male"> М
               </label>
-              <label <?php if ($errors['sex']) {print 'class="error1"';} ?>>
+              <label <?php if ($errors['pol']) {print 'class="error1"';} ?>>
               <input type="radio" <?php if($values['pol'] == "fem") {print 'checked="checked"';}?> name="pol" value="fem"> Ж
               </label>
               <br>
