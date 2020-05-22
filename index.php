@@ -44,29 +44,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
       setcookie('day_error', '', 100000);
       if($_COOKIE['day_error'] == 1)
           $messages[] = '<div class="mesa">Заполните Дату рождения.</div>';
-          else $messages[] = '<div class="mesa">Недопустимый формат Дня рождения </div>';
+          else $messages[] = '<div class="mesa">Недопустимый формат  </div>';
   }
   
   if ($errors['pol']) {
       setcookie('pol_error', '', 100000);
       if($_COOKIE['pol_error'] == 1)
           $messages[] = '<div class="mesa">select  pol.</div>';
-          else $messages[] = '<div class="mesa">Недопустимый формат Пола </div>';
+          else $messages[] = '<div class="mesa">Недопустимый формат  </div>';
   }
 
 
   if ($errors['lim']) {
       setcookie('lim_error', '', 100000);
       if($_COOKIE['lim_error'] == 1)
-          $messages[] = '<div class="mesa">Выберете Количество конечностей.</div>';
-          else $messages[] = '<div class="mesa">Недопустимый формат Количество конечностей.</div>';
+          $messages[] = '<div class="mesa">Введите количество конечностей.</div>';
+          else $messages[] = '<div class="mesa">неверное количество конечностей.</div>';
   }
 
   if ($errors['abil']) {
       setcookie('abil_error', '', 100000);
       if($_COOKIE['abil_error'] == 1)
-          $messages[] = '<div class="mesa">Выберете Способность.</div>';
-          else $messages[] = '<div class="mesa">Недопустимый формат Способности.</div>';
+          $messages[] = '<div class="mesa">определите Способности.</div>';
+          else $messages[] = '<div class="mesa">некорректные способности.</div>';
   }
   
   if ($errors['bio']) {
@@ -131,7 +131,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
    if (empty(array_filter($errors)) && !empty($_COOKIE[session_name()]) &&
        session_start() && !empty($_SESSION['login'])) {
-           // Загрузить данные пользователя из БД.
+      
            printf('Вход с логином %s, uid %d', $_SESSION['login'], $_SESSION['uid']);
            
            $user = 'u20397';
@@ -283,7 +283,7 @@ else {
   
   if (!empty($_COOKIE[session_name()]) &&
       session_start() && !empty($_SESSION['login'])) {
-          // Перезаписать данные в БД новыми данными,
+       
           $user = 'u20397';
           $pass = '5245721';
           $db = new PDO('mysql:host=localhost;dbname=u20397', $user, $pass, array(PDO::ATTR_PERSISTENT => true));
@@ -292,7 +292,7 @@ else {
               header('Location: index.php');
               exit();
           }
-          // Подготовленный запрос. Не именованные метки.
+ 
           try {
               $_POST['day']=strtotime($_POST['day']);
               if($_POST['doit'] == 2) $_POST['doit'] = 0;
