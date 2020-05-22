@@ -19,8 +19,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   $errors = array();
   $errors['fio'] = !empty($_COOKIE['fio_error']);
   $errors['email'] = !empty($_COOKIE['email_error']);
-  $errors['bday'] = !empty($_COOKIE['bday_error']);
-  $errors['sex'] = !empty($_COOKIE['sex_error']);
+  $errors['day'] = !empty($_COOKIE['day_error']);
+  $errors['pol'] = !empty($_COOKIE['pol_error']);
   $errors['lim'] = !empty($_COOKIE['lim_error']);
   $errors['abil'] = !empty($_COOKIE['abil_error']);
   $errors['bio'] = !empty($_COOKIE['bio_error']);
@@ -40,33 +40,33 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
           else $messages[] = '<div class="mesa">Недопустимые символы в Email</div>';
   }
   
-  if ($errors['bday']) {
-      setcookie('bday_error', '', 100000);
-      if($_COOKIE['bday_error'] == 1)
-          $messages[] = '<div class="mesa">Заполните Дату рождения.</div>';
-          else $messages[] = '<div class="mesa">Недопустимый формат Дня рождения </div>';
+  if ($errors['day']) {
+      setcookie('day_error', '', 100000);
+      if($_COOKIE['day_error'] == 1)
+          $messages[] = '<div class="mesa">Определите Дату рождения.</div>';
+          else $messages[] = '<div class="mesa">некорректная дата </div>';
   }
   
-  if ($errors['sex']) {
-      setcookie('sex_error', '', 100000);
-      if($_COOKIE['sex_error'] == 1)
-          $messages[] = '<div class="mesa">Выберете Пол.</div>';
-          else $messages[] = '<div class="mesa">Недопустимый формат Пола </div>';
+  if ($errors['pol']) {
+      setcookie('pol_error', '', 100000);
+      if($_COOKIE['pol_error'] == 1)
+          $messages[] = '<div class="mesa">Какой пол?.</div>';
+          else $messages[] = '<div class="mesa">Недопустимый  пол </div>';
   }
 
 
   if ($errors['lim']) {
       setcookie('lim_error', '', 100000);
       if($_COOKIE['lim_error'] == 1)
-          $messages[] = '<div class="mesa">Выберете Количество конечностей.</div>';
-          else $messages[] = '<div class="mesa">Недопустимый формат Количество конечностей.</div>';
+          $messages[] = '<div class="mesa">Выберите количество конечностей.</div>';
+          else $messages[] = '<div class="mesa">Некооректное количество конечностей.</div>';
   }
 
   if ($errors['abil']) {
       setcookie('abil_error', '', 100000);
       if($_COOKIE['abil_error'] == 1)
-          $messages[] = '<div class="mesa">Выберете Способность.</div>';
-          else $messages[] = '<div class="mesa">Недопустимый формат Способности.</div>';
+          $messages[] = '<div class="mesa">Выберите способности.</div>';
+          else $messages[] = '<div class="mesa">Недопустимая способность.</div>';
   }
   
   if ($errors['bio']) {
@@ -90,12 +90,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
       ,$_COOKIE['email_value']) || empty($_COOKIE['email_value']) ? '' : $_COOKIE['email_value'];
   else $values['email']='';
   
-  if (isset($_COOKIE['bday_value']))
-  $values['bday'] = !preg_match('/^\d\d\d\d\-\d\d\-\d\d$/' ,$_COOKIE['bday_value']) || empty($_COOKIE['bday_value']) ? '' : $_COOKIE['bday_value'];
-  else $values['bday']='';
+  if (isset($_COOKIE['day_value']))
+  $values['day'] = !preg_match('/^\d\d\d\d\-\d\d\-\d\d$/' ,$_COOKIE['day_value']) || empty($_COOKIE['day_value']) ? '' : $_COOKIE['day_value'];
+  else $values['day']='';
   
-  if (isset($_COOKIE['sex_value']))
-      $values['sex'] = !preg_match('/^WOM|MAN$/' ,$_COOKIE['sex_value']) || empty($_COOKIE['sex_value']) ? '' : $_COOKIE['sex_value'];
+  if (isset($_COOKIE['pol_value']))
+      $values['pol'] = !preg_match('/^fem|male$/' ,$_COOKIE['pol_value']) || empty($_COOKIE['pol_value']) ? '' : $_COOKIE['pol_value'];
       else $values['sex']='';
 
   if (isset($_COOKIE['lim_value']))
@@ -105,13 +105,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   if (isset($_COOKIE['abil_value'])){
       $abiln=unserialize($_COOKIE['abil_value']);
       $values['god'] = !preg_match('/^[0-1]$/' , $abiln['god']) || empty($abiln['god']) ? '0' : $abiln['god'];
-      $values['twalk'] = !preg_match('/^[0-1]$/' ,$abiln['twalk']) || empty($abiln['twalk']) ? '0': $abiln['twalk'];
+      $values['sten'] = !preg_match('/^[0-1]$/' ,$abiln['sten']) || empty($abiln['sten']) ? '0': $abiln['sten'];
       $values['fly'] = !preg_match('/^[0-1]$/' ,$abiln['fly']) || empty($abiln['fly']) ? '0': $abiln['fly'];
 
   }
       else {
         $values['god']='0';
-        $values['twalk']='0';
+        $values['sten']='0';
         $values['fly']='0';
       }
       
@@ -135,7 +135,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
            
            // Подготовленный запрос. Не именованные метки.
            try {
-               $stmt = $db->prepare("SELECT * FROM Autouser WHERE id = ?");
+               $stmt = $db->prepare("SELECT * FROM utable WHERE id = ?");
                $stmt->execute(array($_SESSION['uid']));
            }
            catch(PDOException $e){
@@ -149,14 +149,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
          
            $values['fio'] = !empty($user_data[0]['fio']) ? $user_data[0]['fio'] : '';
            $values['email'] = !empty($user_data[0]['email']) ? $user_data[0]['email'] : '';
-           $values['bday'] = !empty($user_data[0]['bday']) ? date("Y-m-d",$user_data[0]['bday']) : '';
-           $values['sex'] = !empty($user_data[0]['sex']) ? $user_data[0]['sex'] : '';
+           $values['day'] = !empty($user_data[0]['day']) ? date("Y-m-d",$user_data[0]['day']) : '';
+           $values['pol'] = !empty($user_data[0]['pol']) ? $user_data[0]['pol'] : '';
            $values['lim'] = !empty($user_data[0]['lim']) ? $user_data[0]['lim'] : '0';
            $values['god'] = !empty($user_data[0]['god']) ? $user_data[0]['god'] : '';
-           $values['twalk'] = !empty($user_data[0]['twalk']) ? $user_data[0]['twalk'] : '';
+           $values['sten'] = !empty($user_data[0]['sten']) ? $user_data[0]['sten'] : '';
            $values['fly'] = !empty($user_data[0]['fly']) ? $user_data[0]['fly'] : '';
            $values['bio'] = !empty($user_data[0]['bio']) ? $user_data[0]['bio'] : '';
-           $values['yes'] = !empty($user_data[0]['yess']) ? $user_data[0]['yess'] : '';
+           $values['yes'] = !empty($user_data[0]['doit']) ? $user_data[0]['doit'] : '';
        }  
    
   include('form.php');
@@ -185,26 +185,26 @@ else {
       setcookie('email_value', $_POST['email'], time() + 30 * 24 * 60 * 60);
   }
   
-  if (empty($_POST['bday'])) {
-      setcookie('bday_error', '1', time() + 24 * 60 * 60);
+  if (empty($_POST['day'])) {
+      setcookie('day_error', '1', time() + 24 * 60 * 60);
       $errors = TRUE;
-  } else if(!preg_match('/^\d\d\d\d\-\d\d\-\d\d$/', $_POST['bday']))
+  } else if(!preg_match('/^\d\d\d\d\-\d\d\-\d\d$/', $_POST['day']))
   {
-      setcookie('bday_error', '2', time() + 30 * 24 * 60 * 60);
+      setcookie('day_error', '2', time() + 30 * 24 * 60 * 60);
       $errors = TRUE;
   }  else {
-      setcookie('bday_value', $_POST['bday'], time() + 30 * 24 * 60 * 60);
+      setcookie('day_value', $_POST['day'], time() + 30 * 24 * 60 * 60);
   }
   
-  if (empty($_POST['sex'])) {
-      setcookie('sex_error', '1', time() + 24 * 60 * 60);
+  if (empty($_POST['pol'])) {
+      setcookie('pol_error', '1', time() + 24 * 60 * 60);
       $errors = TRUE;
-  } else if(!preg_match('/^WOM|MAN$/', $_POST['sex']))
+  } else if(!preg_match('/^fem|male$/', $_POST['pol']))
   {
-      setcookie('sex_error', '2', time() + 30 * 24 * 60 * 60);
+      setcookie('pol_error', '2', time() + 30 * 24 * 60 * 60);
       $errors = TRUE;
   }  else {
-      setcookie('sex_value', $_POST['sex'], time() + 30 * 24 * 60 * 60);
+      setcookie('pol_value', $_POST['pol'], time() + 30 * 24 * 60 * 60);
   }
 
     if (empty($_POST['lim']) && $_POST['lim']!='0') {
@@ -218,7 +218,7 @@ else {
       setcookie('lim_value', $_POST['lim'], time() + 30 * 24 * 60 * 60);
   }
 
-  $ability_labels = ['god' => 'Бессмертие', 'twalk' => 'Прохождение сквозь стены', 'fly' => 'Левитация' ];
+  $ability_labels = ['god' => 'Бессмертие', 'sten' => 'Прохождение сквозь стены', 'fly' => 'Левитация' ];
   $ability_data = array_keys($ability_labels);
   $error_ab = FALSE;
   if (empty($_POST['abilities'])) {
@@ -251,13 +251,13 @@ else {
         setcookie('bio_value', $_POST['bio'], time() + 30 * 24 * 60 * 60);
     }
     
-    if (!empty($_POST['yess']) && $_POST['yess']!='1' )
+    if (!empty($_POST['doit']) && $_POST['doit']!='1' )
     {
         setcookie('yes_error', '1', time() + 30 * 24 * 60 * 60);
         $errors = TRUE;
     }  else {
-        if(empty($_POST['yess'])) $_POST['yess']='2';
-        setcookie('yes_value', $_POST['yess'], time() + 30 * 24 * 60 * 60);
+        if(empty($_POST['doit'])) $_POST['doit']='2';
+        setcookie('yes_value', $_POST['doit'], time() + 30 * 24 * 60 * 60);
     }
     
   if ($errors) {
@@ -267,8 +267,8 @@ else {
   else {
     setcookie('fio_error', '', 100000);
     setcookie('email_error', '', 100000);
-    setcookie('bday_error', '', 100000);
-    setcookie('sex_error', '', 100000);
+    setcookie('day_error', '', 100000);
+    setcookie('pol_error', '', 100000);
     setcookie('lim_error', '', 100000);
     setcookie('abil_error', '', 100000);
     setcookie('bio_error', '', 100000);
@@ -278,17 +278,17 @@ else {
   if (!empty($_COOKIE[session_name()]) &&
       session_start() && !empty($_SESSION['login'])) {
           // Перезаписать данные в БД новыми данными,
-          $user = 'u20362';
-          $pass = '5800777';
-          $db = new PDO('mysql:host=localhost;dbname=u20362', $user, $pass, array(PDO::ATTR_PERSISTENT => true));
+          $user = 'u20397';
+          $pass = '5245721';
+          $db = new PDO('mysql:host=localhost;dbname=u20397', $user, $pass, array(PDO::ATTR_PERSISTENT => true));
           
           // Подготовленный запрос. Не именованные метки.
           try {
-              $_POST['bday']=strtotime($_POST['bday']);
-              if($_POST['yess'] == 2) $_POST['yess'] = 0;
-              $params=array($_POST['fio'],$_POST['email'],$_POST['bday'],$_POST['sex'],$_POST['lim'],$ability_insert['god'],$ability_insert['twalk'],$ability_insert['fly'],$_POST['bio'],$_POST['yess'],$_SESSION['uid']);
-              $stmt = $db->prepare("UPDATE Autouser SET fio = ?,email = ?,bday = ?,sex = ?,lim = ?,god = ?,twalk = ?,fly = ?,bio = ?,yess = ?  WHERE id = ?");
-              $stmt->execute($params);
+              $_POST['day']=strtotime($_POST['day']);
+              if($_POST['doit'] == 2) $_POST['doit'] = 0;
+              $parametr=array($_POST['fio'],$_POST['email'],$_POST['day'],$_POST['pol'],$_POST['lim'],$ability_insert['god'],$ability_insert['sten'],$ability_insert['fly'],$_POST['bio'],$_POST['doit'],$_SESSION['uid']);
+              $stmt = $db->prepare("UPDATE utable SET fio = ?,email = ?,day = ?,pol = ?,lim = ?,god = ?,sten = ?,fly = ?,bio = ?,doit = ?  WHERE id = ?");
+              $stmt->execute($parametr);
           }
           catch(PDOException $e){
               print('Error : ' . $e->getMessage());
@@ -296,15 +296,15 @@ else {
           }
       }
       else {
-          $userb = 'u20362';
-          $passb = '5800777';
-          $db = new PDO('mysql:host=localhost;dbname=u20362', $userb, $passb, array(PDO::ATTR_PERSISTENT => true));
+          $userb = 'u20397';
+          $passb = '5245721';
+          $db = new PDO('mysql:host=localhost;dbname=u20397', $userb, $passb, array(PDO::ATTR_PERSISTENT => true));
           
           $pass=substr(md5(uniqid()),0,8);
           try {
-              $params=array($pass);
-              $stmt = $db->prepare("INSERT INTO Autouser SET password = md5(?)");
-              $stmt -> execute($params);
+              $parametr=array($pass);
+              $stmt = $db->prepare("INSERT INTO utable SET password = md5(?)");
+              $stmt -> execute($parametr);
           }
           catch(PDOException $e){
               print('Error : ' . $e->getMessage());
@@ -314,9 +314,9 @@ else {
           $login = 'user'.$current_id;
           // Сохраняем в Cookies.
           try {
-              $params=array($login,$current_id);
-              $stmt = $db->prepare("UPDATE Autouser SET login = ? WHERE id = ?");
-              $stmt -> execute($params);
+              $parametr=array($login,$current_id);
+              $stmt = $db->prepare("UPDATE utable SET login = ? WHERE id = ?");
+              $stmt -> execute($parametr);
           }
           catch(PDOException $e){
               print('Error : ' . $e->getMessage());
@@ -324,11 +324,11 @@ else {
           }
           
           try {
-              $_POST['bday']=strtotime($_POST['bday']);
-              if($_POST['yess'] == 2) $_POST['yess'] = 0;
-              $params=array($_POST['fio'],$_POST['email'],$_POST['bday'],$_POST['sex'],$_POST['lim'],$ability_insert['god'],$ability_insert['twalk'],$ability_insert['fly'],$_POST['bio'],$_POST['yess'],$current_id);
-              $stmt = $db->prepare("UPDATE Autouser SET fio = ?,email = ?,bday = ?,sex = ?,lim = ?,god = ?,twalk = ?,fly = ?,bio = ?,yess = ?  WHERE id = ?");
-              $stmt->execute($params);
+              $_POST['day']=strtotime($_POST['day']);
+              if($_POST['doit'] == 2) $_POST['doit'] = 0;
+              $parametr=array($_POST['fio'],$_POST['email'],$_POST['day'],$_POST['pol'],$_POST['lim'],$ability_insert['god'],$ability_insert['sten'],$ability_insert['fly'],$_POST['bio'],$_POST['doit'],$current_id);
+              $stmt = $db->prepare("UPDATE utable SET fio = ?,email = ?,day = ?,pol = ?,lim = ?,god = ?,sten = ?,fly = ?,bio = ?,doit = ?  WHERE id = ?");
+              $stmt->execute($parametr);
           }
           
           catch(PDOException $e){
