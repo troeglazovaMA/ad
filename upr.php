@@ -23,7 +23,7 @@
 			    print('<td>'.$atr.'</td>');
 			    print('<td> 
                 <form action="admin.php" method="POST">
-                <button class="btn btn-primary" value="'.$key.'" name="butdel" type="submit">Удалить</button>
+                <button class="btn btn-primary" value="'.$key.'" name="todelete" type="submit">Удалить</button>
                 </form> 
                 </td>');
 			    print('</tr>');
