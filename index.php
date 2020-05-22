@@ -96,7 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   
   if (isset($_COOKIE['pol_value']))
       $values['pol'] = !preg_match('/^fem|male$/' ,$_COOKIE['pol_value']) || empty($_COOKIE['pol_value']) ? '' : $_COOKIE['pol_value'];
-      else $values['sex']='';
+      else $values['pol']='';
 
   if (isset($_COOKIE['lim_value']))
       $values['lim'] = !preg_match('/^[0-4]$/' ,$_COOKIE['lim_value']) || empty($_COOKIE['lim_value']) ? '0' : $_COOKIE['lim_value'];
