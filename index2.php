@@ -138,9 +138,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
            $pass = '5245721';
            $db = new PDO('mysql:host=localhost;dbname=u20397', $user, $pass, array(PDO::ATTR_PERSISTENT => true));
            
-           // Подготовленный запрос. Не именованные метки.
+          
            try {
-               $stmt = $db->prepare("SELECT * FROM Autouser WHERE id = ?");
+               $stmt = $db->prepare("SELECT * FROM utable WHERE id = ?");
                $stmt->execute(array($_SESSION['uid']));
            }
            catch(PDOException $e){
@@ -297,7 +297,7 @@ else {
               $_POST['day']=strtotime($_POST['day']);
               if($_POST['doit'] == 2) $_POST['doit'] = 0;
               $parametr=array($_POST['fio'],$_POST['email'],$_POST['day'],$_POST['pol'],$_POST['lim'],$ability_insert['god'],$ability_insert['sten'],$ability_insert['fly'],$_POST['bio'],$_POST['doit'],$_SESSION['uid']);
-              $stmt = $db->prepare("UPDATE Autouser SET fio = ?,email = ?,day = ?,pol = ?,lim = ?,god = ?,sten = ?,fly = ?,bio = ?,doit = ?  WHERE id = ?");
+              $stmt = $db->prepare("UPDATE utable SET fio = ?,email = ?,day = ?,pol = ?,lim = ?,god = ?,sten = ?,fly = ?,bio = ?,doit = ?  WHERE id = ?");
               $stmt->execute($parametr);
           }
           catch(PDOException $e){
